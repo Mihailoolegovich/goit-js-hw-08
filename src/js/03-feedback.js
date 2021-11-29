@@ -16,7 +16,7 @@ const objInput = {};
 
 function onTextarealInput(evt) {
   objInput[evt.target.name] = evt.target.value;
-  console.log('obj', evt.target.name);
+
   const stringObjInput = JSON.stringify(objInput);
 
   localStorage.setItem(`SAVE_FORM`, stringObjInput);
