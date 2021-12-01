@@ -1,18 +1,19 @@
+const throttle = require('lodash.throttle');
+
 refs = {
   feedbackForm: document.querySelector('.feedback-form'),
   feedbackEmail: document.querySelector('input[name="email"]'),
   feedbackMessage: document.querySelector('textarea[name="message"]'),
 };
-const throttle = require('lodash.throttle');
-const SAVE_FORM = 'feedback-form-state';
 
 refs.feedbackEmail.addEventListener('input', throttle(onTextarealInput, 500));
 refs.feedbackMessage.addEventListener('input', throttle(onTextarealInput, 500));
 refs.feedbackForm.addEventListener('submit', onFormSubmit);
 
-populateTextarea();
+const SAVE_FORM = 'feedback-form-state';
 
 const objInput = {};
+populateTextarea();
 
 function onTextarealInput(evt) {
   objInput[evt.target.name] = evt.target.value;
@@ -25,10 +26,13 @@ function onTextarealInput(evt) {
 function onFormSubmit(evt) {
   evt.preventDefault();
 
-  console.log('data-input', JSON.parse(localStorage.getItem('SAVE_FORM')));
-
   evt.currentTarget.reset();
   localStorage.removeItem('SAVE_FORM');
+
+  // objInput clear
+  for (const key in objInput) {
+    delete objInput[key];
+  }
 }
 
 function populateTextarea() {
@@ -37,9 +41,11 @@ function populateTextarea() {
   if (savedEl) {
     if (savedEl.email) {
       refs.feedbackEmail.value = savedEl.email;
+      objInput['email'] = savedEl.email;
     }
     if (savedEl.message) {
       refs.feedbackMessage.value = savedEl.message;
+      objInput['message'] = savedEl.message;
     }
   }
 }
