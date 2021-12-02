@@ -13,6 +13,7 @@ refs.feedbackForm.addEventListener('submit', onFormSubmit);
 const SAVE_FORM = 'feedback-form-state';
 
 const objInput = {};
+
 populateTextarea();
 
 function onTextarealInput(evt) {
@@ -26,6 +27,8 @@ function onTextarealInput(evt) {
 function onFormSubmit(evt) {
   evt.preventDefault();
 
+  console.log(objInput);
+
   evt.currentTarget.reset();
   localStorage.removeItem('SAVE_FORM');
 
@@ -33,6 +36,7 @@ function onFormSubmit(evt) {
   for (const key in objInput) {
     delete objInput[key];
   }
+  
 }
 
 function populateTextarea() {
